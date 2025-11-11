@@ -35,6 +35,7 @@ public class cadastroVIEW extends javax.swing.JFrame {
         jSeparator2 = new javax.swing.JSeparator();
         btnCadastrar = new javax.swing.JButton();
         btnProdutos = new javax.swing.JButton();
+        btnSalvar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -70,6 +71,13 @@ public class cadastroVIEW extends javax.swing.JFrame {
             }
         });
 
+        btnSalvar.setText("Salvar");
+        btnSalvar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalvarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -77,7 +85,9 @@ public class cadastroVIEW extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(230, 230, 230)
+                        .addGap(180, 180, 180)
+                        .addComponent(btnSalvar)
+                        .addGap(18, 18, 18)
                         .addComponent(btnCadastrar))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(154, 154, 154)
@@ -123,7 +133,9 @@ public class cadastroVIEW extends javax.swing.JFrame {
                     .addComponent(jLabel5)
                     .addComponent(cadastroValor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(27, 27, 27)
-                .addComponent(btnCadastrar)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnCadastrar)
+                    .addComponent(btnSalvar))
                 .addGap(18, 18, 18)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 74, Short.MAX_VALUE)
@@ -171,6 +183,48 @@ public class cadastroVIEW extends javax.swing.JFrame {
         listagem.setVisible(true);
     }//GEN-LAST:event_btnProdutosActionPerformed
 
+    private void btnSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalvarActionPerformed
+// 1. Captura dos dados da tela (assumindo que os campos são txtNome e txtValor)
+    String nome = txtNome.getText();
+    // Você deve ter um campo de texto ou um spinner para o valor
+    // Se for JTextField, use try-catch para converter para Integer:
+    int valor = 0; 
+    try {
+        valor = Integer.parseInt(txtValor.getText()); 
+    } catch (NumberFormatException e) {
+        javax.swing.JOptionPane.showMessageDialog(this, "O valor deve ser um número inteiro válido.", "Erro de Formato", javax.swing.JOptionPane.ERROR_MESSAGE);
+        return;
+    }
+    
+    // O status inicial de um produto novo é "A Venda"
+    String status = "A Venda"; 
+    
+    // 2. Cria o DTO
+    ProdutosDTO produto = new ProdutosDTO();
+    produto.setNome(nome);
+    produto.setValor(valor);
+    produto.setStatus(status);
+    
+    // 3. Chama o DAO para persistir
+    ProdutosDAO produtosdao = new ProdutosDAO();
+    
+    try {
+        produtosdao.cadastrarProduto(produto);
+        
+        // 4. Mensagem de sucesso (Requisito atendido)
+        javax.swing.JOptionPane.showMessageDialog(this, "Produto cadastrado com sucesso!", "Sucesso", javax.swing.JOptionPane.INFORMATION_MESSAGE);
+        
+        // Opcional: Limpar os campos após o sucesso
+        txtNome.setText("");
+        txtValor.setText("");
+        
+    } catch (java.sql.SQLException erro) {
+        // 4. Mensagem de falha (Requisito atendido)
+        System.err.println("Erro SQL no Cadastro: " + erro.getMessage());
+        javax.swing.JOptionPane.showMessageDialog(this, "Falha ao cadastrar. Verifique a conexão com o banco ou o driver JDBC.", "Erro de Cadastro", javax.swing.JOptionPane.ERROR_MESSAGE);
+    }        
+    }//GEN-LAST:event_btnSalvarActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -209,6 +263,7 @@ public class cadastroVIEW extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCadastrar;
     private javax.swing.JButton btnProdutos;
+    private javax.swing.JButton btnSalvar;
     private javax.swing.JTextField cadastroNome;
     private javax.swing.JTextField cadastroValor;
     private javax.swing.JLabel jLabel1;
