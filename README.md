@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-
-=======
  Projeto Casa de Leilões
 
  Sobre
@@ -20,4 +17,3 @@
  Autor
  Filipe Guerreiro  
 [GitHub: filipeguerreiro25-boop](https://github.com/filipeguerreiro25-boop)
->>>>>>> 099ebfb0f4bc5fa6642e8b510a875ba5ca8cfdc5
