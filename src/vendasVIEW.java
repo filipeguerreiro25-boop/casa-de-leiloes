@@ -105,7 +105,7 @@ public class vendasVIEW extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void bntVoltarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntVoltarActionPerformed
-
+        this.dispose();
     }//GEN-LAST:event_bntVoltarActionPerformed
 
 
